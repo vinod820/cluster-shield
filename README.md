@@ -135,7 +135,10 @@ kubectl
 
 Docker
 
-📂 cluster-shield
+## 📂 Planned Repository Structure
+
+```
+cluster-shield
 │
 ├── cli
 │   └── main.py
@@ -154,9 +157,8 @@ Docker
 ├── reports
 │   └── report_generator.py
 │
-├── docs
-│
-└── README.md
+└── docs
+```
 👥 Team
 
 Team Name: ClusterShield
