@@ -1,90 +1,66 @@
-🛡 ClusterShield – Kubernetes Attack Path Visualizer
+# 🛡 ClusterShield – Kubernetes Attack Path Visualizer
 
 Graph-Based Security Analysis for Cloud-Native Infrastructure
 
-ClusterShield is a security analysis tool that discovers multi-hop attack paths inside Kubernetes clusters.
-Instead of analyzing permissions individually, ClusterShield models the entire cluster as a directed graph and uses graph algorithms to detect potential privilege escalation chains.
+ClusterShield is a security analysis tool that detects **multi-hop privilege escalation attack paths in Kubernetes clusters**. Instead of auditing permissions individually, ClusterShield models the entire cluster as a **directed graph** and uses graph algorithms to discover hidden attack chains.
 
-This project is being built for Hack2Future 2.0 – IIIT Dharwad (Cloud Security Track).
+Built for **Hack2Future 2.0 – IIIT Dharwad (Cloud Security Track)**.
 
-🚨 Problem
+---
+
+# 🚨 Problem
 
 Modern Kubernetes clusters contain many interconnected entities:
 
-Pods
+- Pods
+- ServiceAccounts
+- Roles
+- RoleBindings
+- Secrets
+- External Services
 
-Service Accounts
-
-Roles / RoleBindings
-
-Secrets
-
-External services
-
-Security tools typically analyze these permissions individually, which makes it difficult to detect multi-step attack chains.
+Attackers rarely compromise privileged resources directly. Instead they follow **chains of permissions**, where each step appears harmless individually.
 
 Example attack path:
 
+```
 Attacker → Pod → ServiceAccount → Secret → Production Database
+```
 
-Each step appears harmless individually, but together they create a privilege escalation chain.
+Each step looks safe in isolation but together creates a **privilege escalation chain**.
 
-ClusterShield identifies these hidden paths.
+Traditional RBAC audits cannot detect these multi-hop relationships.
 
-💡 Proposed Solution
+---
 
-ClusterShield builds a graph model of the Kubernetes cluster and applies graph algorithms to detect attack paths.
+# 💡 Proposed Solution
 
-Core workflow
+ClusterShield builds a **graph model of the Kubernetes cluster** and applies graph algorithms to detect attack paths.
 
-1️⃣ Extract cluster data
+Workflow:
 
-kubectl get pods
-kubectl get roles
-kubectl get rolebindings
-kubectl get secrets
+1. Extract cluster data using `kubectl`
+2. Convert cluster entities into nodes
+3. Map permissions as directed edges
+4. Run graph algorithms to discover attack paths
+5. Generate a security kill-chain report
 
-2️⃣ Convert entities into a directed graph
+---
 
-Nodes
+# 🧠 Key Features
 
-Pods
+- Kubernetes RBAC attack path discovery
+- Graph-based security model
+- Privilege escalation detection
+- CVSS weighted risk scoring
+- Attack path visualization
+- Kill-chain report generation
 
-ServiceAccounts
+---
 
-Roles
+# 🏗 System Architecture
 
-Secrets
-
-Edges
-
-Permission relationships
-
-3️⃣ Run security analysis algorithms
-
-Algorithm	Purpose
-BFS	Find blast radius of a compromised node
-Dijkstra	Find shortest exploit path
-DFS	Detect circular privilege escalation
-
-4️⃣ Generate a Kill Chain Security Report
-
-attack path list
-
-risk scores
-
-recommended remediation
-
-🧠 Key Features
-
-✔ Kubernetes RBAC attack path discovery
-✔ Graph-based security model
-✔ Privilege escalation detection
-✔ CVSS weighted risk scoring
-✔ Attack path visualization
-✔ Kill-chain report generation
-
-🏗 System Architecture
+```
 Kubernetes Cluster
         │
         ▼
@@ -102,40 +78,37 @@ BFS    Dijkstra   DFS
 Kill Chain Report
         │
         ▼
-Interactive Attack Graph (D3.js / Cytoscape)
-🛠 Tech Stack
+Interactive Attack Graph (D3.js / Cytoscape.js)
+```
 
-Backend
+---
 
-Python
+# 🛠 Tech Stack
 
-NetworkX
+## Backend
+- Python
+- NetworkX
+- Click CLI Framework
 
-Click CLI
+## Frontend
+- D3.js
+- Cytoscape.js
 
-Frontend
+## Database
+- JSON
+- Neo4j (optional)
 
-D3.js / Cytoscape.js
+## APIs
+- Kubernetes API
+- NIST NVD API
 
-Database
+## Tools
+- kubectl
+- Docker
 
-JSON
+---
 
-Neo4j (optional)
-
-APIs
-
-Kubernetes API
-
-NIST NVD API
-
-Tools
-
-kubectl
-
-Docker
-
-## 📂 Planned Repository Structure
+# 📂 Planned Repository Structure
 
 ```
 cluster-shield
@@ -157,24 +130,55 @@ cluster-shield
 ├── reports
 │   └── report_generator.py
 │
-└── docs
+├── docs
+│
+└── README.md
 ```
-👥 Team
 
-Team Name: ClusterShield
+---
 
-Members
+# 🚧 Development Status
 
-Rakshita — Graph Algorithms
+Project under development for **Hack2Future 2.0 Hackathon**
 
-Vinod — Backend Development
+Planned milestones:
 
-Sharada — Security Analysis
+- [ ] Kubernetes cluster data ingestion
+- [ ] Graph construction
+- [ ] Attack path detection algorithms
+- [ ] Risk scoring engine
+- [ ] Interactive attack graph visualization
+- [ ] Kill chain report generation
 
-Sanskurti — Frontend & Visualization
+---
 
-🚀 Status
+# 👥 Team
 
-Project under development for Hack2Future 2.0 Hackathon.
+**Team Name:** ClusterShield
 
-Implementation will begin during the hackathon.
+- Rakshita — Graph Algorithms
+- Vinod — Backend Development
+- Sharada — Security Analysis
+- Sanskurti — Frontend & Visualization
+
+---
+
+# 🚀 Future Scope
+
+- CI/CD integration for automated attack path detection
+- Multi-cluster security analysis
+- Temporal attack path tracking
+- GitHub Actions integration
+- Real-time Kubernetes monitoring
+
+---
+
+# 📜 License
+
+MIT License
+
+---
+
+# ⭐ Hackathon
+
+Project built for **Hack2Future 2.0 – National Level Hackathon at IIIT Dharwad**
